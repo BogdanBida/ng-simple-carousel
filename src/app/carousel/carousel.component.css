@@ -16,9 +16,11 @@ nav {
   position: absolute;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   bottom: 20px;
   left: 20px;
-  width: 256px;
+  min-width: 105px;
+  width: 8%;
 }
 
 nav > button {
@@ -30,7 +32,13 @@ nav > button {
   margin-left: 20px;
   background-color: transparent;
   cursor: pointer;
-  filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.2));
+  filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.6)) drop-shadow(0px 2px 16px rgba(0,0,0,0.8));
+}
+
+nav > button:active {
+  transition: 0.1s;
+  width: 31px;
+  height: 31px;
 }
 
 nav > .left {

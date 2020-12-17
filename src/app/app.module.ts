@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -5,14 +6,9 @@ import { AppComponent } from './app.component';
 import { CarouselComponent } from './carousel/carousel.component';
 
 @NgModule({
-  declarations: [	
-    AppComponent,
-      CarouselComponent
-   ],
-  imports: [
-    BrowserModule
-  ],
+  declarations: [AppComponent, CarouselComponent],
+  imports: [BrowserModule, ReactiveFormsModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

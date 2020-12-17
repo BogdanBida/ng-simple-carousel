@@ -4,7 +4,8 @@ import {
   Output,
   EventEmitter,
   Input,
-  TemplateRef,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 
 @Component({
@@ -12,19 +13,17 @@ import {
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.css'],
 })
-export class CarouselComponent implements OnInit {
+export class CarouselComponent implements OnInit, OnChanges {
   @Input() interval = 10;
   @Input() transition = 1000;
   @Input() controlls = false;
   @Input() itemsPerStep = 1;
   @Input() timingFunction = 'ease-in-out';
   @Input() itemsAmount: number;
-  @Input() prevBtn: TemplateRef<any>;
-  @Input() nextBtn: TemplateRef<any>;
 
   @Output() move = new EventEmitter<number>();
 
-  public offset: number;
+  public offset = 0;
 
   private width: number;
   public styles: {
@@ -33,16 +32,33 @@ export class CarouselComponent implements OnInit {
   };
   private intervalId: any;
 
-  constructor() {
-    this.offset = 0;
-    this.itemsPerStep = 1;
+  constructor() {}
+
+  ngOnChanges({ interval, itemsPerStep, itemsAmount }: SimpleChanges): void {
+    if (interval && interval.currentValue !== interval.previousValue) {
+      this.initInterval();
+    }
+    if (
+      (itemsPerStep &&
+        itemsAmount &&
+        itemsPerStep.currentValue !== itemsPerStep.previousValue) ||
+      itemsAmount.currentValue !== itemsAmount.previousValue
+    ) {
+      this.setWidth();
+    }
   }
 
   ngOnInit(): void {
     this.styles = {
       transform: null,
-      transition: `${this.transition}ms ${this.timingFunction}`,
+      transition: null,
     };
+    this.setWidth();
+    this.updateStyles();
+  }
+
+  private setWidth(): void {
+    this.offset = 0;
     this.width = (100 / this.itemsAmount) * this.itemsPerStep;
     this.updateStyles();
     this.initInterval();
@@ -70,6 +86,7 @@ export class CarouselComponent implements OnInit {
 
   private updateStyles(): void {
     this.styles.transform = this.getTranslateX();
+    this.styles.transition = `${this.transition}ms ${this.timingFunction}`;
   }
 
   private getTranslateX(): any {

@@ -1,10 +1,33 @@
-<ng-carousel [interval]="10000" [transition]="1000" [itemsAmount]="4" [controlls]="true" class="carousel"
-  (move)="move($event)" [prevBtn]="prev" [nextBtn]="next">
-  <div *ngFor="let i of [1,2,3,4]" class="slide">
+<ng-carousel [interval]="interval" [transition]="transition" [itemsAmount]="elementsAmount" [controlls]="controlls"
+  [timingFunction]="timingFunction" class="carousel" (move)="move($event)">
+  <div *ngFor="let i of elements" class="slide">
     {{i}}
   </div>
 </ng-carousel>
 <nav>
-  <button #prev>PREV</button>
-  <button #next>NEXT</button>
+  <div class="input-wrapper">
+    <label for="">Anim TF: {{timingFunction}}</label>
+    <select [(ngModel)]="timingFunction">
+      <option *ngFor="let i of timingFunctions" [value]="i">{{i}}</option>
+    </select>
+  </div>
+  <div class="input-wrapper">
+    <label for="">Interval: {{interval}}ms</label>
+    <input type="range" min="250" max="15000" [(ngModel)]="interval">
+  </div>
+  <div class="input-wrapper">
+    <label for="">Transition: {{transition}}ms</label>
+    <input type="range" min="0" max="2500" [(ngModel)]="transition">
+  </div>
+  <div>
+    Slide: {{slide + 1}}
+  </div>
+  <div class="input-wrapper">
+    <label for="">Controls</label>
+    <input type="checkbox" [(ngModel)]="controlls">
+  </div>
+  <div class="input-wrapper">
+    <label for="">Elements: {{elementsAmount}}</label>
+    <input type="range" min="1" max="10" [(ngModel)]="elementsAmount">
+  </div>
 </nav>
