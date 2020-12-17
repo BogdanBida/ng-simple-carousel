@@ -1,0 +1,7 @@
+<div class="container" [ngStyle]="styles">
+  <ng-content></ng-content>
+</div>
+<nav *ngIf="controlls">
+  <button (click)="prev()" class="left"></button>
+  <button (click)="next()" class="right"></button>
+</nav>
